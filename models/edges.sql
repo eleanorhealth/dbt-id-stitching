@@ -13,7 +13,7 @@
         node_b_label,
         {{ dbt.current_timestamp() }} AS node_timestamp
     FROM (
-        {{ ' UNION '.join(sql_statements) }}
+        {{ ' UNION DISTINCT '.join(sql_statements) }}
     ) AS s
     {% if var('ids-to-exclude', undefined) %}
     WHERE
@@ -33,7 +33,7 @@
                 rudder_id,
                 LOWER(node_a) AS node
             FROM {{ this }}
-            UNION
+            UNION DISTINCT
             SELECT
                 rudder_id,
                 LOWER(node_b) AS node
@@ -55,7 +55,7 @@
                 ON LOWER(o.node_a) = a.node
             LEFT OUTER JOIN cte_min_node_1 AS b
                 ON LOWER(o.node_b) = b.node
-            UNION
+            UNION DISTINCT
             SELECT
                 LEAST(a.first_row_id, b.first_row_id) AS rudder_id,
                 LOWER(o.node_b) AS node
@@ -82,7 +82,7 @@
                 ON LOWER(o.node_a) = a.node
             LEFT OUTER JOIN cte_min_node_2 AS b
                 ON LOWER(o.node_b) = b.node
-            UNION
+            UNION DISTINCT
             SELECT
                 LEAST(a.first_row_id, b.first_row_id) AS rudder_id,
                 LOWER(o.node_b) AS node

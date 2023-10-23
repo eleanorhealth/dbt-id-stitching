@@ -45,8 +45,6 @@ WITH columns AS (
 
 )
 
-select * from columns order by 1
-
 -- bigquery specific edits
 SELECT "SELECT DISTINCT CAST("|| a.cn ||" AS STRING) AS node_a, '" || a.cn || "' AS node_a_label, CAST("|| b.cn ||" AS STRING) AS node_b, '" || b.cn || "' AS node_b_label FROM " || a.tn || " WHERE COALESCE(CAST(" || a.cn || " AS STRING), '') != '' AND COALESCE(CAST(" || b.cn || " AS STRING), '') != ''" AS sql_to_run
 -- SELECT 'SELECT DISTINCT ' || a.cn || '::TEXT AS node_a, ''' || a.cn || ''' AS node_a_label, ' || b.cn || '::TEXT AS node_b, ''' || b.cn || ''' AS node_b_label FROM ' || a.tn || ' WHERE COALESCE(' || a.cn || '::TEXT, '''') != '''' AND COALESCE(' || b.cn || '::TEXT, '''') != ''''' AS sql_to_run
