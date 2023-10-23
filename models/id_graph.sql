@@ -12,7 +12,7 @@ FROM (
         node_a_label AS node_label,
         node_timestamp
     FROM {{ ref('edges') }}
-    UNION
+    UNION DISTINCT
     SELECT
         rudder_id,
         node_b AS node,

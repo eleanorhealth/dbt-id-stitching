@@ -11,14 +11,13 @@ WITH columns AS (
     WHERE
     
         -- hardcoding for now
-        LOWER(column_name) IN ('athena_id', 'athena_new_id', 'enterprise_id', 'elation_id', 'legacy_patient_id',
-                               'lead_id', 'account_id', 'contact_id', 'email')
+        LOWER(column_name) IN ('athena_id', 'athena_new_id', 'enterprise_id', 'elation_id', 'legacy_patient_id')
+                               --'lead_id', 'account_id', 'contact_id', 'email')
         {# LOWER(column_name) IN {{ var('id-columns') }} #}
 
         -- hardcoding for now
-        AND LOWER(table_name) IN ('base_athena_members', 'base_elation_members', 'base_opshub_members',
-                              'int_athena__pivoted_custom_demographics',
-                              'base_salesforce_leads', 'base_salesforce_accounts', 'base_salesforce_contacts')
+        AND LOWER(table_name) IN ('base_athena_members', 'base_elation_members', 'base_opshub_members', 'int_athena__pivoted_custom_demographics')
+                              --'base_salesforce_leads', 'base_salesforce_accounts', 'base_salesforce_contacts')
         {# {% if var('tables-to-include', undefined) %}
         AND LOWER(table_name) IN {{ var('tables-to-include') }}
         {% endif %} #}
