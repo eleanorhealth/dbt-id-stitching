@@ -3,29 +3,25 @@ WITH columns AS (
         column_name AS cn,
         table_catalog || '.' || table_schema || '.' || table_name AS tn
 
-    /*not working out of box so hardcoding bigquery requirments for looking at info-schema
-    for timesake, not trying to get variables working - uneccesary complexity at moment.*/    
-    FROM `ele-prod-735126`.`dbt_jasondexter_preparation_layer`.`INFORMATION_SCHEMA.COLUMNS`
+    /*not working out of box so hardcoding bigquery requirments for looking at info-schema.
+    'region-us' looks at ALL of our BQ data-warehouse; we use 'schema' var based on needs.*/    
+    FROM `ele-prod-735126`.`region-us`.`INFORMATION_SCHEMA.COLUMNS`
     --FROM "{{ var('source-database', target.database) }}".{{ source('information_schema', 'columns').include(database=false) }}
     
     WHERE
     
-        -- hardcoding for now
-        LOWER(column_name) IN ('athena_id', 'athena_new_id', 'enterprise_id', 'elation_id', 'legacy_patient_id')
-                               --'lead_id', 'account_id', 'contact_id', 'email')
-        {# LOWER(column_name) IN {{ var('id-columns') }} #}
+        -- get id-columns of interest
+        LOWER(column_name) IN {{ var('id-columns') }}
 
-        -- hardcoding for now
-        AND LOWER(table_name) IN ('base_athena_members', 'base_elation_members', 'base_opshub_members', 'int_athena__pivoted_custom_demographics')
-                              --'base_salesforce_leads', 'base_salesforce_accounts', 'base_salesforce_contacts')
-        {# {% if var('tables-to-include', undefined) %}
+        -- get tables of interest
+        {% if var('tables-to-include', undefined) %}
         AND LOWER(table_name) IN {{ var('tables-to-include') }}
-        {% endif %} #}
+        {% endif %}
         
-        -- not using schemas (include) for not
-        {# {% if var('schemas-to-include', undefined) %}
+        -- get schema(s) (BQ dataset) to include
+        {% if var('schemas-to-include', undefined) %}
         AND LOWER(table_schema) IN {{ var('schemas-to-include') }}
-        {% endif %} #}
+        {% endif %}
 
         -- not using schemas (exclude) for now
         {# {% if var('schemas-to-exclude', undefined) %}
