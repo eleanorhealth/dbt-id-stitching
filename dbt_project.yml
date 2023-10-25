@@ -16,6 +16,8 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
-# vars:
-#   id-columns: ()
-#   tables-to-include: ()
+# leaving vars blank (to be controlled w/in dbt-project that loads this package)
+vars:
+  id-columns: ()
+  tables-to-include: ()
+  schemas-to-include: ()
