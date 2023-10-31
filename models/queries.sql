@@ -23,7 +23,6 @@ WITH columns AS (
 )
 
 SELECT "SELECT DISTINCT CAST("|| a.cn ||" AS STRING) AS node_a, '" || a.cn || "' AS node_a_label, CAST("|| b.cn ||" AS STRING) AS node_b, '" || b.cn || "' AS node_b_label FROM " || a.tn || " WHERE COALESCE(CAST(" || a.cn || " AS STRING), '') != '' AND COALESCE(CAST(" || b.cn || " AS STRING), '') != ''" AS sql_to_run
-
 FROM columns AS a
 INNER JOIN columns AS b
     ON a.tn = b.tn
