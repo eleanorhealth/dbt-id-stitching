@@ -1,9 +1,9 @@
 version: 2
 
 sources:
-  - name: information_schema
+  - name: INFORMATION_SCHEMA
     tables:
-      - name: columns
+      - name: COLUMNS
 
 models:
   - name: queries

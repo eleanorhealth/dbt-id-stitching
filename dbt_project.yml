@@ -18,3 +18,10 @@ clean-targets:
 
 vars:
   id-columns: ('anonymous_id', 'user_id', 'email', 'context_traits_email')
+
+models:
+
+    # need to be tagged so that these only get run with 'new' eleanor models
+    +tags:
+      - eleanor_new
+      - daily
